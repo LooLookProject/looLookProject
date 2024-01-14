@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header"></head>
+<body>
+
+<div class="container">
+
+    <div th:replace="layout/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <div class="text-right mb-2">
+            <a href="/admin/create" id="createBtn" class="btn btn-primary">Create User</a>
+        </div>
+        <table class="table">
+            <tr>
+                <th>NO</th>
+                <th>USER ID</th>
+                <th>USER NAME</th>
+            </tr>
+            <tr th:each="user, i :${userList}">
+                <td th:text="${i.index+1}"></td>
+                <td ><a th:text="${user.userId}" th:href="@{/admin/detail/{userId}(userId=${user.userId})}"></a></td>
+                <td th:text="${user.userName}"></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div th:replace="layout/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+<script>
+
+
+</script>
+</html>

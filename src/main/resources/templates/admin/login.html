@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header"></head>
+<body>
+
+<div class="container">
+
+    <div th:replace="layout/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <h2>Login</h2>
+        <form id="loginForm" action="/admin/login" method="post">
+        <table class="table">
+            <tr>
+                <th>USER ID</th>
+                <th>USER NAME</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="userId"></td>
+                <td><input type="password" name="userPw"></td>
+            </tr>
+        </table>
+        </form>
+        <div class="text-center mt-2">
+            <button id="loginBtn" class="btn btn-primary">Login</button>
+        </div>
+    </div>
+
+    <div th:replace="layout/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+<script>
+let loginBtn = document.querySelector('#loginBtn');
+loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#loginForm').submit();
+});
+
+</script>
+</html>

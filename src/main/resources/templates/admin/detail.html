@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header"></head>
+<body>
+
+<div class="container">
+
+    <div th:replace="layout/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <div class="text-right mb-2">
+            <button id="updateBtn" class="btn btn-primary">Update User</button>
+            <button id="deleteBtn" class="btn btn-danger">Delete User</button>
+        </div>
+        <form id="updateForm" method="post" action="/admin/update">
+        <input type="hidden" name="userId" th:value="${user.userId}">
+        <h4>User Info</h4>
+        <table class="table">
+            <tr>
+                <td>USER ID</td>
+                <td th:text="${user.userId}"></td>
+            </tr>
+            <tr>
+                <td>USER NAME</td>
+                <td><input name="userName" th:value="${user.userName}" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input name="address" th:value="${user.address}" class="form-control"></td>
+            <tr>
+                <td>CREATED DATE</td>
+                <td th:text="${#temporals.format(user.createdDate,'yyyy-MM-dd')}"></td>
+            </tr>
+        </table>
+        <h4>Room Info</h4>
+<!--        <table class="table">-->
+<!--            <tr>-->
+<!--                <td>Floor</td>-->
+<!--                <td><input name="floor" th:value="${floor}" class="form-control"></td>-->
+<!--            </tr>-->
+
+<!--        </table>-->
+            <table class="table">
+                <tr>
+                    <th>NO</th>
+                    <th>FLOOR</th>
+                    <th>ROOM TYPE</th>
+                    <th>ROOM NUMBER</th>
+                </tr>
+                <tr th:each="room, i :${roomList}">
+                    <td th:text="${i.index+1}"></td>
+                    <td th:text="${room.floor}"></td>
+                    <td th:text="${room.roomType}"></td>
+                    <td th:text="${room.roomNumber}"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+
+    <div th:replace="layout/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+<script>
+let deleteBtn = document.querySelector('#deleteBtn');
+deleteBtn.addEventListener('click', (e) => {
+    let result = confirm("Do you want to delete?");
+    if(result){
+        let userId = document.querySelector('input[name="userId"]').value;
+        location.href = "/admin/delete/"+userId;
+    }
+});
+
+let updateBtn = document.querySelector('#updateBtn');
+updateBtn.addEventListener('click', (e) => {
+    document.querySelector("#updateForm").submit();
+});
+
+</script>
+
+</html>

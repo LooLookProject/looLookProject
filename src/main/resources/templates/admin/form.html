@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header"></head>
+<body>
+
+<div class="container">
+
+    <div th:replace="layout/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+
+        <form id="createForm" th:object="${userForm}" th:action="@{/admin/create}" method="post">
+        <h4>User Info</h4>
+        <table class="table">
+            <tr>
+                <td>USER ID</td>
+                <td><input type="text" th:field="*{userId}" name="userId" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>USER NAME</td>
+                <td><input type="text" th:field="*{userName}" name="userName" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" th:field="*{address}" name="address" class="form-control"></td>
+
+            </tr>
+        </table>
+        <h4>Room Info</h4>
+        <div class="text-right mb-2">
+            <button id="addRoomBtn" type="button" class="btn btn-info btn-sm">Add Room</button>
+        </div>
+        <table id="roomTable" class="table">
+            <thead>
+                <tr>
+                    <th>Floor</th>
+                    <th>Type</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="room-tr">
+                    <td><input name="floor"  th:field="*{roomList[0].floor}" type="number" class="form-control"></td>
+                    <td><select name="roomType" th:field="*{roomList[0].roomType}" class="form-control">
+                            <option value="M">Man</option>
+                            <option value="W">Woman</option>
+                        </select>
+                    </td>
+                    <td><input name="roomNumber" th:field="*{roomList[0].roomNumber}" type="number" class="form-control"></td>
+                </tr>
+            </tbody>
+        </table>
+        </form>
+        <div class="text-center mt-2">
+            <button id="createBtn" class="btn btn-primary">Create User</button>
+        </div>
+    </div>
+
+
+
+    <div th:replace="layout/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+<script>
+
+    let createBtn = document.querySelector("#createBtn");
+    createBtn.addEventListener("click",(e)=>{
+        console.log($("#createForm"));
+        $("#createForm").submit();
+    })
+
+    let addRoomBtn = document.querySelector("#addRoomBtn");
+    addRoomBtn.addEventListener("click",(e)=>{
+        e.preventDefault();
+        let table = document.querySelector("#roomTable");
+        let length = table.rows.length-1;
+        console.log(length);
+        //열 정의
+        let gRows  = table.insertRow();
+//셀 정의
+        let oCell = new Array();
+        oCell[0]  = gRows.insertCell();
+        oCell[1]  = gRows.insertCell();
+        oCell[2]  = gRows.insertCell();
+//각 셀에 html값을 입력
+        oCell[0].innerHTML = "<input name='roomList["+length+"].floor' type='number' class='form-control'>";
+        oCell[1].innerHTML = "<select name='roomList["+length+"].roomType' class='form-control'>" +
+            "                            <option value='M'>Man</option>" +
+            "                            <option value='W'>Woman</option>" +
+            "                        </select>";
+        oCell[2].innerHTML = "<input name='roomList["+length+"].roomNumber' type='number' class='form-control'>";
+        // let html = `<tr class="room-tr">
+        //             <td><input name="floor"  th:field="*{roomList[${length+1}].floor}" type="number" class="form-control"></td>
+        //             <td><select name="roomType" th:field="*{roomList[${length+1}].roomType}" class="form-control">
+        //                     <option value="M">Man</option>
+        //                     <option value="W">Woman</option>
+        //                 </select>
+        //             </td>
+        //             <td><input name="roomNumber" th:field="*{roomList[${length+1}].roomNumber}" type="number" class="form-control"></td>
+        //         </tr>`;
+        // rows[length+1].innerHTML = html;
+    })
+
+</script>
+
+</html>
