@@ -8,10 +8,10 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class loolookProjectApplication {
+public class looLookProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(loolookProjectApplication.class, args);
+		SpringApplication.run(looLookProjectApplication.class, args);
 	}
 
 
