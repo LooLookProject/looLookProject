@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "hpp_user")
+@Entity(name = "llk_user")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

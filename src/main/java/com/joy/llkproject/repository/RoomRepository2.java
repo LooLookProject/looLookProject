@@ -10,7 +10,7 @@ import java.util.List;
 public interface RoomRepository2 extends JpaRepository<Room,String> {
 
     @Query(value=
-            "select * from hpp_room r " +
+            "select * from llk_room r " +
                     "join r.user u " +
                     "where u.userId= :userId", nativeQuery = true)
     List<Room> getRoomByUserId(@Param("userId") String userId);

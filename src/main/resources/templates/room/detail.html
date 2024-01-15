@@ -82,7 +82,7 @@
     }
 
     function getFloorList(type,userId){
-        return axios.get( "/user/floor/"+userId+"/"+type);
+        return axios.get( "/floor/"+userId+"/"+type);
     }
 
     function setFloor(floors){
@@ -116,7 +116,7 @@
     }
 
     function getRoomList(type,floor,userId){
-        return axios.get( "/user/room/"+userId+"/"+type+"/"+floor);
+        return axios.get( "/room/"+userId+"/"+type+"/"+floor);
     }
 
     function setRooms(rooms){
@@ -124,7 +124,7 @@
         if(rooms==null || rooms.length==0) return html;
         rooms.forEach((room, index) => {
             html += `
-             <div data-room="${room.roomNumber}" data-id="${room.id}" data-occupy="${room.occupy}" class="room-block ${room.occupy == 'Y' ? 'active' : ''}"></div>
+             <div data-room="${room.roomNumber}" data-id="${room.id}" data-occupy="${room.occupy}" class="room-block ${room.occupy == 'LOCK' ? 'active' : ''}"></div>
             `
         });
         return html;
@@ -135,27 +135,34 @@
     document.querySelector('#rooms').addEventListener('click', function(e) {
         e.preventDefault();
         let ele = e.target;
-        let roomNum = ele.dataset.room;
         let occupy = ele.dataset.occupy;
         let id = ele.dataset.id;
-        let newOccupy = '';
-        if(occupy=='Y'){
-            newOccupy = 'N';
+        if(occupy=='LOCK'){
+            unlockRoom(id)
+                .then(response => {
+                    // let type = document.querySelector("input[name=type]").value;
+                    let type = document.querySelector('input[name=type]:checked').value;
+                    let floor = document.querySelector("select[name=floor] option:checked").value;
+                    setRoomList(type,floor);
+                })
         }else{
-            newOccupy = 'Y';
+            lockRoom(id)
+                .then(response => {
+                    // let type = document.querySelector("input[name=type]").value;
+                    let type = document.querySelector('input[name=type]:checked').value;
+                    let floor = document.querySelector("select[name=floor] option:checked").value;
+                    setRoomList(type,floor);
+                })
         }
-        updateRoomOccupy(id,userId,newOccupy)
-            .then(response => {
-                // let type = document.querySelector("input[name=type]").value;
-                let type = document.querySelector('input[name=type]:checked').value;
-                let floor = document.querySelector("select[name=floor] option:checked").value;
-                setRoomList(type,floor);
 
-            })
     });
 
-    function updateRoomOccupy(id,userId,newOccupy){
-        return axios.get( "/user/room/update/"+userId+"/"+id+"/"+newOccupy);
+    function lockRoom(id){
+        return axios.post( "/api/lock/"+id);
+    }
+
+    function unlockRoom(id){
+        return axios.post( "/api/unlock/"+id);
     }
 
 </script>

@@ -16,6 +16,8 @@ import java.util.List;
 
 @Service
 public class LoolookProjectService {
+    private final String LOCK = "LOCK";
+    private final String UNLOCK = "UNLOCK";
 
     private final RoomRepository roomRepository;
     private final RoomRepository2 roomRepository2;
@@ -43,10 +45,25 @@ public class LoolookProjectService {
     }
 
     @Transactional
-    public void updateRoom(String userId, String id, String newOccupy){
+    public void updateRoom(String id, String newOccupy){
         Room room = roomRepository.find(Long.parseLong(id));
         room.setId(Long.parseLong(id));
         room.setOccupy(newOccupy);
+        roomRepository.save(room);
+    }
+
+    @Transactional
+    public void lockRoom(String id) {
+        Room room = roomRepository.find(Long.parseLong(id));
+        room.setId(Long.parseLong(id));
+        room.setOccupy(LOCK);
+        roomRepository.save(room);
+    }
+    @Transactional
+    public void unlockRoom(String id) {
+        Room room = roomRepository.find(Long.parseLong(id));
+        room.setId(Long.parseLong(id));
+        room.setOccupy(UNLOCK);
         roomRepository.save(room);
     }
 
@@ -114,4 +131,6 @@ public class LoolookProjectService {
 //            roomList.add(newRoom);
         }
     }
+
+
 }

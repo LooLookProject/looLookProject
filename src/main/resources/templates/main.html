@@ -31,7 +31,7 @@
 
     function getUserPage(){
         let userId = document.querySelector('input[name="userId"]').value;
-        return axios.get( "/user/"+userId);
+        return axios.get( "/"+userId);
     }
 
     function goUserPage(){
@@ -39,7 +39,7 @@
             .then(response => {
                 if(response.data=="SUCCESS"){
                     let userId = document.querySelector('input[name="userId"]').value;
-                    window.location.href = "/user/page/"+userId;
+                    window.location.href = "/page/"+userId;
                 }else{
                     alert("존재하지 않는 사용자 입니다.");
                     return false;

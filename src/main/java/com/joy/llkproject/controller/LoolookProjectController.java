@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class LoolookProjectController {
         return "main";
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     @ResponseBody
     public String userFind(@PathVariable String userId, Model model){
         User user = hpptProjectService.findUser(userId);
@@ -39,36 +40,45 @@ public class LoolookProjectController {
         return message;
     }
 
-    @GetMapping("/user/page/{userId}")
+    @GetMapping("/page/{userId}")
     public String userPage(@PathVariable String userId, Model model){
         model.addAttribute("userId",userId);
         return "room/detail";
     }
 
-    @GetMapping("/user/floor/{userId}/{type}")
+    @GetMapping("/floor/{userId}/{type}")
     @ResponseBody
     public List<Integer> userFloor(@PathVariable String userId,@PathVariable String type, Model model){
         List<Integer> floors = hpptProjectService.findFloor(userId,type);
         return floors;
     }
 
-    @GetMapping("/user/room/{userId}/{type}/{floor}")
+    @GetMapping("/room/{userId}/{type}/{floor}")
     @ResponseBody
     public List<Room> userRooms(@PathVariable String userId,@PathVariable String type,
-                                   @PathVariable String floor,
-                                   Model model){
+                                   @PathVariable String floor){
         List<Room> rooms = hpptProjectService.findRooms(userId,type,floor);
         return rooms;
     }
 
-    @GetMapping("/user/room/update/{userId}/{id}/{newOccupy}")
+    @PostMapping("/api/lock/{id}")
     @ResponseBody
-    public String updateRoom(@PathVariable String userId,@PathVariable String id,
-                                @PathVariable String newOccupy,
-                                Model model){
+    public String lockRoom(@PathVariable String id){
         String result = "success";
         try {
-            hpptProjectService.updateRoom(userId,id,newOccupy);
+            hpptProjectService.lockRoom(id);
+        }catch (Exception e){
+            result="fail";
+        }
+        return result;
+    }
+
+    @PostMapping("/api/unlock/{id}")
+    @ResponseBody
+    public String unlockRoom(@PathVariable String id){
+        String result = "success";
+        try {
+            hpptProjectService.unlockRoom(id);
         }catch (Exception e){
             result="fail";
         }

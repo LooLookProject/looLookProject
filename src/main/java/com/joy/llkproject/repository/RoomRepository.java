@@ -25,7 +25,7 @@ public class RoomRepository {
 
     public List<Room> findAllByUser(String userId) {
         return em.createQuery("select r, count(r.roomNumber) " +
-                        "from hpp_room r " +
+                        "from llk_room r " +
                         "join r.user u " +
                         "where  u.userId= :userId " +
                         "group by r.floor, r.roomType", Room.class)
@@ -33,14 +33,14 @@ public class RoomRepository {
                 .getResultList();
     }
     public List<Integer> findAllByString(String userId, String type) {
-        return em.createQuery("select distinct r.floor from hpp_room r join r.user u where r.roomType = :type and u.userId= :userId order by r.floor", Integer.class)
+        return em.createQuery("select distinct r.floor from llk_room r join r.user u where r.roomType = :type and u.userId= :userId order by r.floor", Integer.class)
                 .setParameter("type", type)
                 .setParameter("userId", userId)
                 .getResultList();
     }
 
     public List<Room> findAllByString2(String userId, String type, Integer floor) {
-        return em.createQuery("select r from hpp_room r join r.user u where r.roomType = :type and u.userId= :userId and r.floor= :floor order by r.roomNumber", Room.class)
+        return em.createQuery("select r from llk_room r join r.user u where r.roomType = :type and u.userId= :userId and r.floor= :floor order by r.roomNumber", Room.class)
                 .setParameter("type", type)
                 .setParameter("userId", userId)
                 .setParameter("floor", floor)
@@ -49,7 +49,7 @@ public class RoomRepository {
 
 
     public List<Room> findAllByUserId(String userId) {
-        return em.createQuery("select r from hpp_room r join r.user u where u.userId= :userId order by r.floor", Room.class)
+        return em.createQuery("select r from llk_room r join r.user u where u.userId= :userId order by r.floor", Room.class)
                 .setParameter("userId", userId)
                 .getResultList();
     }

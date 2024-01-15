@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
-@Entity(name = "hpp_room")
+@Entity(name = "llk_room")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
