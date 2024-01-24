@@ -65,6 +65,12 @@
 
     }
 
+    setInterval(function() {
+        let type = document.querySelector('input[name=type]:checked').value;
+        let floor = document.querySelector("select[name=floor] option:checked").value;
+        setRoomList(type,floor);
+    }, 3000);
+
     let userId = document.querySelector("input[name=userId]").value;
     function changeType(current){
         document.querySelector("#rooms").innerHTML = '';
@@ -132,30 +138,30 @@
 
     let rooms = document.querySelectorAll(".room-block");
 
-    document.querySelector('#rooms').addEventListener('click', function(e) {
-        e.preventDefault();
-        let ele = e.target;
-        let occupy = ele.dataset.occupy;
-        let id = ele.dataset.id;
-        if(occupy=='LOCK'){
-            unlockRoom(id)
-                .then(response => {
-                    // let type = document.querySelector("input[name=type]").value;
-                    let type = document.querySelector('input[name=type]:checked').value;
-                    let floor = document.querySelector("select[name=floor] option:checked").value;
-                    setRoomList(type,floor);
-                })
-        }else{
-            lockRoom(id)
-                .then(response => {
-                    // let type = document.querySelector("input[name=type]").value;
-                    let type = document.querySelector('input[name=type]:checked').value;
-                    let floor = document.querySelector("select[name=floor] option:checked").value;
-                    setRoomList(type,floor);
-                })
-        }
-
-    });
+    // document.querySelector('#rooms').addEventListener('click', function(e) {
+    //     e.preventDefault();
+    //     let ele = e.target;
+    //     let occupy = ele.dataset.occupy;
+    //     let id = ele.dataset.id;
+    //     if(occupy=='LOCK'){
+    //         unlockRoom(id)
+    //             .then(response => {
+    //                 // let type = document.querySelector("input[name=type]").value;
+    //                 let type = document.querySelector('input[name=type]:checked').value;
+    //                 let floor = document.querySelector("select[name=floor] option:checked").value;
+    //                 setRoomList(type,floor);
+    //             })
+    //     }else{
+    //         lockRoom(id)
+    //             .then(response => {
+    //                 // let type = document.querySelector("input[name=type]").value;
+    //                 let type = document.querySelector('input[name=type]:checked').value;
+    //                 let floor = document.querySelector("select[name=floor] option:checked").value;
+    //                 setRoomList(type,floor);
+    //             })
+    //     }
+    //
+    // });
 
     function lockRoom(id){
         return axios.post( "/api/lock/"+id);
