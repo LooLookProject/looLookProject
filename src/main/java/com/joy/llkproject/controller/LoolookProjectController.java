@@ -3,6 +3,7 @@ package com.joy.llkproject.controller;
 import com.joy.llkproject.entity.Room;
 import com.joy.llkproject.entity.User;
 import com.joy.llkproject.service.LoolookProjectService;
+import com.joy.llkproject.websocket.LooWebsocketHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,16 @@ import java.util.List;
 
 @Controller
 public class LoolookProjectController {
-
+    static final String jsonFormat = "{\"status\":\"%s\",\"id\":\"%s\"}";
+    private final LooWebsocketHandler websocketHandler;
     private final LoolookProjectService hpptProjectService;
 
     public LoolookProjectController(
-            LoolookProjectService hpptProjectService
+            LoolookProjectService hpptProjectService,
+            LooWebsocketHandler websocketHandler
     ) {
         this.hpptProjectService = hpptProjectService;
+        this.websocketHandler = websocketHandler;
     }
 
     @GetMapping("/")
@@ -62,26 +66,35 @@ public class LoolookProjectController {
     }
 
     @PostMapping("/api/lock/{id}")
-    @ResponseBody
     public String lockRoom(@PathVariable String id){
         String result = "success";
         try {
             hpptProjectService.lockRoom(id);
+            // WebSocket 확인
         }catch (Exception e){
-            result="fail";
+            e.printStackTrace();
+            result = "fail";
         }
-        return result;
+        String message = String.format(jsonFormat,result,id);
+        websocketHandler.sendResult(message);
+        return "room/detail";
     }
 
     @PostMapping("/api/unlock/{id}")
-    @ResponseBody
     public String unlockRoom(@PathVariable String id){
         String result = "success";
         try {
             hpptProjectService.unlockRoom(id);
+            // WebSocket 확인
+            String message = String.format(jsonFormat,result,id);
+            websocketHandler.sendResult(message);
         }catch (Exception e){
-            result="fail";
+            e.printStackTrace();
+            result = "fail";
         }
-        return result;
+        String message = String.format(jsonFormat,result,id);
+        websocketHandler.sendResult(message);
+        return "room/detail";
     }
+
 }

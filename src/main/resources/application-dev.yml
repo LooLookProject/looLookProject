@@ -3,8 +3,8 @@ spring:
     activate:
       on-profile: "dev"
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/hppproject?useUnicode=true&serverTimezone=Asia/Seoul
-    username: joy
+    url: jdbc:mysql://127.0.0.1:3306/loolook?useUnicode=true&serverTimezone=Asia/Seoul
+    username: llk
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 

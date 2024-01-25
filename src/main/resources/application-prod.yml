@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/hppproject?allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://127.0.0.1:3306/llkproject?allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
     username: joy
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -19,16 +19,18 @@ public class LooWebsocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        log.info(session + " 클라이언트 접속");
         sessions.add(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        log.info(session + " 클라이언트 접속 해제");
         sessions.remove(session);
     }
 
-    public void sendStatus(String status) {
-        TextMessage message = new TextMessage(status);
+    public void sendResult(String msg) {
+        TextMessage message = new TextMessage(msg);
         sessions.forEach(s -> {
             try {
                 s.sendMessage(message);
