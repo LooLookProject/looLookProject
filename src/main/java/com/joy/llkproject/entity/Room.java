@@ -22,7 +22,7 @@ public class Room {
     Integer floor;
     String roomNumber;
     String roomType;
-    @ColumnDefault("N")
+    @ColumnDefault("UNLOCK")
     String occupy;
     @ColumnDefault("Y")
     String vh;

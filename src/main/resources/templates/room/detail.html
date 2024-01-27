@@ -51,7 +51,7 @@
     $(function(){
         init();
 
-        const websocket = new WebSocket('ws://localhost:8080/ws/check');
+        const websocket = new WebSocket('ws://'+location.host+'/ws/check');
         websocket.onmessage = (e) => {
             const data = JSON.parse(e.data);
             let id = data.id;
